@@ -4,10 +4,11 @@ public class Car {
     private int year;
     private double price;
 
-    public Car(String brand, String model, int year) {
+    public Car(String brand, String model, int year, double price) {
         this.brand = brand;
         this.model = model;
         this.year = year;
+        this.price = price;
     }
 
     public String getBrand() {
@@ -43,7 +44,7 @@ public class Car {
     }
 
     public double calculateDepreciation(){
-        return (getPrice()*(Math.pow(calculateCarAge(), 0.85)));
+        return getPrice()* Math.pow(0.85, calculateCarAge());
     }
 
     @Override
@@ -51,9 +52,9 @@ public class Car {
         return "Car{" +
                 "brand='" + getBrand() + '\'' +
                 ", model='" + getModel() + '\'' +
-                ", year=" + getYear() + '\'' +
-                ", age=" + calculateCarAge() + '\'' +
-                ", vintage? " + isVintage() + '\'' +
+                ", year=" + getYear() +
+                ", age=" + calculateCarAge()+
+                ", vintage? " + isVintage() +
                 ", price= " + calculateDepreciation() +
                 '}';
     }
