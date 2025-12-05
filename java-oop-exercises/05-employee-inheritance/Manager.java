@@ -6,6 +6,6 @@ public class Manager extends Employee{
 
     @Override
     public double calculateSalary(){
-        return getBaseSalary()*1.10;
+        return getBaseSalary()*1.20;
     }
 }
