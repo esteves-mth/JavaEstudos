@@ -2,13 +2,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryManager {
+    private List<User> usuarios = new ArrayList<>();
     private List<Bookl> livros = new ArrayList<>();
+    private List<Loan> emprestimos = new ArrayList<>();
+
+    public void addUser(User usuario){
+        if (!usuarios.contains(usuario)){
+            usuarios.add(usuario);
+        }
+    }
+    public void removeUser(User usuario){
+        if (usuarios.contains(usuario)){
+            usuarios.remove(usuario);
+        }
+    }
 
     public void addBook(Bookl livro){
-        livros.add(livro);
+        if (!livros.contains(livro)){
+            livros.add(livro);
+        }
     }
     public void removeBook(Bookl livro){
-        livros.remove(livro);
+        if (livros.contains(livro)){
+            livros.remove(livro);
+        }
     }
     public void listBooks(){
         for (Bookl g: livros){
@@ -41,5 +58,34 @@ public class LibraryManager {
             System.out.println("Não encontrado.");
         }
 
+    }
+
+    public void emprestar(User usuario, Bookl livro){
+        boolean ta = false;
+        for (Loan em: emprestimos){
+            System.out.println("Verificando...");
+                if (em.getLivro().getID().equals(livro.getID())){
+                    if (em.isAtivo()){
+                        ta = true;
+                    }
+                }
+            }
+        if (!ta){
+            if (livros.contains(livro) && usuarios.contains(usuario)){
+                Loan emprestimo = new Loan(usuario, livro);
+                emprestimos.add(emprestimo);
+            }
+        }
+    }
+    public void devolver(User usuario, Bookl livro){
+        for (Loan em: emprestimos){
+            if (em.getLivro().getID().equals(livro.getID())){
+                if (em.isAtivo()){
+                    if (livros.contains(livro) && usuarios.contains(usuario)){
+                        em.devolver();
+                    }
+                }
+            }
+        }
     }
 }
