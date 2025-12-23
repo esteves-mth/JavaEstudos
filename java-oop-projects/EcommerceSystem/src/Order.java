@@ -1,38 +1,47 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer {
-    private String ID;
-    private String name;
-    private List<Order> orderList = new ArrayList<>();
+public class Order {
+    private Customer customer;
+    private String status;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-    public Customer(String ID, String name) {
-        this.ID = ID;
-        this.name = name;
+    public Order(Customer customer, ShoppingCart cart) {
+        this.customer = customer;
+        this.status = "PROCESSANDO";
+        this.orderItems.addAll(cart.getProdutos());
     }
-
-    public void addOrder(Order pedido){
-        orderList.add(pedido);
-    }
-
-    public void clearOrder(){
-        if(!orderList.isEmpty()) {
-            orderList.clear();
+    public double calcTotal(){
+        double total = 0;
+        for(OrderItem itens : orderItems){
+            total += itens.subTotal();
         }
+        return total;
+    }
+    public void finalizarOrder(ShoppingCart cart){
+        boolean estoqueSuficiente = true;
+        for (OrderItem item : orderItems) {
+            if (item.getProdutoObj().getStock() < item.getQuantity()) {
+                estoqueSuficiente = false;
+                break;
+            }
+        }
+
+        for (OrderItem item : orderItems) {
+            item.getProdutoObj().dStock(item.getQuantity());
+        }
+        customer.addOrder(this);
+        cart.clearCart();
+        this.status = "FINALIZADO";
     }
 
-    public String getID() {
-        return ID;
-    } public String getName() {
-        return name;
+    public Customer getCustomer() {
+        return customer;
     }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "ID='" + ID + '\'' +
-                ", name='" + name + '\'' +
-                ", orderList=" + orderList +
-                '}';
+    public String getStatus() {
+        return status;
+    }
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 }
