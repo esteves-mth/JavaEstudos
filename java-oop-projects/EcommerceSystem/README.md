@@ -1,71 +1,94 @@
 # Ecommerce System
 
-Projeto em Java que simula um **sistema básico de e-commerce**, com gerenciamento de clientes, produtos, carrinho de compras e itens de pedido, aplicando conceitos fundamentais de **Programação Orientada a Objetos (OOP)**.
+Projeto em Java que simula um **sistema simples de e-commerce**, focado na modelagem de classes e regras básicas de negócio, utilizando conceitos fundamentais de **Programação Orientada a Objetos (OOP)**.
 
 ## Funcionalidades
 
-### 👤 Cliente (Customer)
-- Criar clientes com **ID** e **nome**
-- Associar pedidos a um cliente
-- Limpar histórico de pedidos
+### 👤 Customer
+- Criação de clientes com **ID** e **nome**
+- Associação de pedidos ao cliente
+- Armazenamento do histórico de pedidos
 
-### 📦 Produto (Product)
-- Criar produtos com:
+### 📦 Product
+- Cadastro de produtos com:
   - ID
-  - nome
-  - preço
-  - estoque
-- Atualizar preço do produto
-- Adicionar ou remover quantidade do estoque
-- Validação básica de estoque e valores
+  - Nome
+  - Preço
+  - Estoque
+- Atualização de preço
+- Controle de estoque (entrada e saída)
+- Validação de valores inválidos
 
-### 🛒 Carrinho de Compras (ShoppingCart)
-- Adicionar produtos ao carrinho com quantidade
+### 🧾 OrderItem
+- Representa um item de compra
+- Associa um **produto** a uma **quantidade**
+- Cálculo de subtotal (preço × quantidade)
+
+### 🛒 ShoppingCart
+- Adicionar produtos ao carrinho
 - Remover produtos do carrinho
 - Visualizar itens do carrinho
-- Calcular valor total da compra
-- Limpar carrinho
+- Calcular o valor total da compra
+- Limpar o carrinho após finalização do pedido
 
-### 🧾 Item de Pedido (OrderItem)
-- Representa um produto dentro do carrinho
-- Controla:
-  - produto
-  - quantidade
-  - subtotal (preço × quantidade)
+### 📑 Order
+- Criação de pedidos a partir do carrinho
+- Cálculo do valor total do pedido
+- Verificação de estoque antes da finalização
+- Atualização do estoque dos produtos
+- Associação do pedido ao cliente
+- Controle de status do pedido (`PROCESSANDO` → `FINALIZADO`)
 
 ## Estrutura do Projeto
 
 - **Customer**
-  - Armazena dados do cliente
-  - Mantém uma lista de pedidos associados
+  - Representa o cliente do sistema
+  - Mantém uma lista de pedidos realizados
 
 - **Product**
-  - Representa um produto do sistema
+  - Representa um produto disponível para compra
   - Controla preço e estoque
 
 - **OrderItem**
-  - Representa um produto + quantidade dentro de um pedido ou carrinho
+  - Representa um produto dentro do pedido
+  - Armazena quantidade e subtotal
 
 - **ShoppingCart**
-  - Gerencia uma lista de `OrderItem`
-  - Calcula o valor total da compra
+  - Gerencia os itens adicionados pelo cliente
+  - Responsável pelo cálculo do total antes do pedido
+
+- **Order**
+  - Representa o pedido final
+  - Responsável por validar estoque, finalizar a compra e registrar o pedido
+
+## Fluxo Básico do Sistema
+
+1. Cliente adiciona produtos ao `ShoppingCart`
+2. O carrinho calcula o total
+3. Um `Order` é criado a partir do carrinho
+4. O pedido verifica se há estoque suficiente
+5. O estoque é atualizado
+6. O pedido é associado ao cliente
+7. O carrinho é limpo
+8. O pedido é finalizado
 
 ## Conceitos de OOP Aplicados
 
 - Encapsulamento
-- Composição (ShoppingCart → OrderItem → Product)
+- Composição (`Order → OrderItem → Product`)
+- Associação (`Customer → Order`)
 - Validação de dados
 - Uso de Collections (`ArrayList`)
-- Responsabilidade bem definida por classe
+- Separação de responsabilidades
 
 ## Tecnologias Utilizadas
 
 - Java
-- Collections Framework (`List`, `ArrayList`)
-- Programação Orientada a Objetos
+- Java Collections Framework
+- Programação Orientada a Objetos (OOP)
 
 ## Objetivo do Projeto
 
-Projeto desenvolvido para **praticar a modelagem de um sistema de e-commerce**, focando em lógica de negócio, organização de classes e boas práticas de OOP.
+Projeto desenvolvido para **praticar a modelagem de um sistema de e-commerce em Java**, focando em lógica de negócio, organização de código e aplicação correta dos conceitos de OOP.
 
-📌 Projeto sem interface gráfica, focado em lógica e estrutura.
+📌 Projeto sem interface gráfica, focado exclusivamente na lógica do sistema.
